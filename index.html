@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funciones en JavaScript - Guía Interactiva</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter y Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        js: {
+                            yellow: '#F7DF1E',
+                            dark: '#0B0F19',
+                            card: '#111827',
+                            border: '#1F2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased selection:bg-yellow-400 selection:text-slate-950">
+
+    <!-- Barra de Navegación Horizontal Fija -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Título -->
+                <a href="#inicio" class="flex items-center gap-3 group shrink-0">
+                    <div class="w-9 h-9 rounded-lg bg-yellow-400 text-slate-950 font-extrabold flex items-center justify-center text-lg shadow-md shadow-yellow-400/20 group-hover:scale-105 transition-transform">
+                        JS
+                    </div>
+                    <span class="font-bold text-white text-base sm:text-lg tracking-tight">Funciones<span class="text-yellow-400">.dev</span></span>
+                </a>
+
+                <!-- Menú Horizontal Desktop con Submenús Desplegables -->
+                <nav class="hidden lg:flex items-center space-x-1" aria-label="Menú principal">
+                    
+                    <!-- Dropdown 1: Conversión de Tipos -->
+                    <div class="relative group">
+                        <button type="button" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition flex items-center gap-1.5">
+                            <span>1.1 Conversión</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-yellow-400 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 py-2">
+                            <a href="#sec-conversion" class="block px-4 py-2 text-xs font-semibold uppercase tracking-wider text-yellow-400 hover:bg-slate-800">Ver Sección Completa</a>
+                            <div class="border-t border-slate-800 my-1"></div>
+                            <a href="#fn-parsefloat" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">parseFloat()</a>
+                            <a href="#fn-number" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">Number()</a>
+                            <a href="#fn-parseint" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">parseInt()</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown 2: Manipulación de Cadenas -->
+                    <div class="relative group">
+                        <button type="button" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition flex items-center gap-1.5">
+                            <span>1.2 Cadenas</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-yellow-400 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 py-2">
+                            <a href="#sec-cadenas" class="block px-4 py-2 text-xs font-semibold uppercase tracking-wider text-yellow-400 hover:bg-slate-800">Ver Sección Completa</a>
+                            <div class="border-t border-slate-800 my-1"></div>
+                            <a href="#fn-concat" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">concat()</a>
+                            <a href="#fn-substring" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">substring()</a>
+                            <a href="#fn-split" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">split()</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown 3: Manipulación de Arrays -->
+                    <div class="relative group">
+                        <button type="button" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition flex items-center gap-1.5">
+                            <span>1.3 Arrays</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-yellow-400 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 py-2">
+                            <a href="#sec-arrays" class="block px-4 py-2 text-xs font-semibold uppercase tracking-wider text-yellow-400 hover:bg-slate-800">Ver Sección Completa</a>
+                            <div class="border-t border-slate-800 my-1"></div>
+                            <a href="#fn-push" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">push()</a>
+                            <a href="#fn-pop" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">pop()</a>
+                            <a href="#fn-join" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">join()</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown 4: Matemáticas -->
+                    <div class="relative group">
+                        <button type="button" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition flex items-center gap-1.5">
+                            <span>1.4 Math</span>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-yellow-400 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-60 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left z-50 py-2">
+                            <a href="#sec-math" class="block px-4 py-2 text-xs font-semibold uppercase tracking-wider text-yellow-400 hover:bg-slate-800">Ver Sección Completa</a>
+                            <div class="border-t border-slate-800 my-1"></div>
+                            <a href="#fn-abs" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">Math.abs()</a>
+                            <a href="#fn-max" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">Math.max()</a>
+                            <a href="#fn-random" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">Math.random() * rango</a>
+                            <a href="#fn-pow" class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-mono">Math.pow()</a>
+                        </div>
+                    </div>
+
+                    <!-- Enlaces directos temas 2, 3 y 4 -->
+                    <a href="#sec-programador" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition">
+                        2. Personalizadas
+                    </a>
+                    <a href="#sec-return" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition">
+                        3. RETURN
+                    </a>
+                    <a href="#sec-variables" class="px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-yellow-400 hover:bg-slate-800/70 transition">
+                        4. Globales/Locales
+                    </a>
+                </nav>
+
+                <!-- Botón Repositorio de GitHub (Desktop & Tablet) + Botón Menú Móvil -->
+                <div class="flex items-center gap-2">
+                    <a href="https://github.com/ChrisHS176/Etapa4" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-800 border border-slate-700 text-xs sm:text-sm font-semibold text-white hover:text-yellow-400 shadow-md transition" title="Ver repositorio en GitHub">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+
+                    <!-- Botón Menú Móvil -->
+                    <button id="mobile-menu-btn" type="button" class="lg:hidden p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-yellow-400" aria-label="Abrir menú">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Desplegable Móvil / Tablet -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 max-h-[80vh] overflow-y-auto px-4 pt-2 pb-6 space-y-4">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-yellow-400 mb-2">1. Funciones Predefinidas</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-2 border-l-2 border-slate-800">
+                    <div>
+                        <a href="#sec-conversion" class="mobile-link block text-sm font-semibold text-white py-1">1.1 Conversión de tipos</a>
+                        <div class="pl-3 space-y-1 text-xs font-mono text-slate-400">
+                            <a href="#fn-parsefloat" class="mobile-link block py-1 hover:text-yellow-400">• parseFloat()</a>
+                            <a href="#fn-number" class="mobile-link block py-1 hover:text-yellow-400">• Number()</a>
+                            <a href="#fn-parseint" class="mobile-link block py-1 hover:text-yellow-400">• parseInt()</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="#sec-cadenas" class="mobile-link block text-sm font-semibold text-white py-1">1.2 Cadenas (Strings)</a>
+                        <div class="pl-3 space-y-1 text-xs font-mono text-slate-400">
+                            <a href="#fn-concat" class="mobile-link block py-1 hover:text-yellow-400">• concat()</a>
+                            <a href="#fn-substring" class="mobile-link block py-1 hover:text-yellow-400">• substring()</a>
+                            <a href="#fn-split" class="mobile-link block py-1 hover:text-yellow-400">• split()</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="#sec-arrays" class="mobile-link block text-sm font-semibold text-white py-1">1.3 Arrays (Arreglos)</a>
+                        <div class="pl-3 space-y-1 text-xs font-mono text-slate-400">
+                            <a href="#fn-push" class="mobile-link block py-1 hover:text-yellow-400">• push()</a>
+                            <a href="#fn-pop" class="mobile-link block py-1 hover:text-yellow-400">• pop()</a>
+                            <a href="#fn-join" class="mobile-link block py-1 hover:text-yellow-400">• join()</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="#sec-math" class="mobile-link block text-sm font-semibold text-white py-1">1.4 Matemáticas (Math)</a>
+                        <div class="pl-3 space-y-1 text-xs font-mono text-slate-400">
+                            <a href="#fn-abs" class="mobile-link block py-1 hover:text-yellow-400">• Math.abs()</a>
+                            <a href="#fn-max" class="mobile-link block py-1 hover:text-yellow-400">• Math.max()</a>
+                            <a href="#fn-random" class="mobile-link block py-1 hover:text-yellow-400">• Math.random() * rango</a>
+                            <a href="#fn-pow" class="mobile-link block py-1 hover:text-yellow-400">• Math.pow()</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-3 flex flex-col space-y-2">
+                <a href="#sec-programador" class="mobile-link text-sm font-semibold text-slate-200 hover:text-yellow-400 py-1">2. Funciones definidas por el programador</a>
+                <a href="#sec-return" class="mobile-link text-sm font-semibold text-slate-200 hover:text-yellow-400 py-1">3. Funciones que devuelven resultado: RETURN</a>
+                <a href="#sec-variables" class="mobile-link text-sm font-semibold text-slate-200 hover:text-yellow-400 py-1">4. Variables: GLOBALES Y LOCALES</a>
+                <div class="pt-2">
+                    <a href="https://github.com/ChrisHS176/Etapa4" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sm font-semibold text-white hover:text-yellow-400 transition">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                        <span>Ver en GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Encabezado Principal -->
+    <section id="inicio" class="pt-28 pb-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 bg-gradient-to-b from-slate-900 to-slate-950">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 mb-6">
+                <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+                Documentación Interactiva de JavaScript
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-5">
+                Domina las <span class="text-yellow-400">Funciones en JavaScript</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-400 text-base sm:text-lg leading-relaxed mb-8">
+                Explora desde las funciones nativas de conversión, cadenas, arreglos y matemáticas hasta la creación de tus propias funciones, retorno de valores y alcance de variables con consolas interactivas en tiempo real.
+            </p>
+            <!-- Accesos rápidos en píldoras -->
+            <div class="flex flex-wrap justify-center gap-2.5 max-w-4xl mx-auto">
+                <a href="#sec-conversion" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">1.1 Conversión</a>
+                <a href="#sec-cadenas" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">1.2 Cadenas</a>
+                <a href="#sec-arrays" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">1.3 Arrays</a>
+                <a href="#sec-math" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">1.4 Matemáticas</a>
+                <a href="#sec-programador" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">2. Personalizadas</a>
+                <a href="#sec-return" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">3. RETURN</a>
+                <a href="#sec-variables" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-sm font-medium text-slate-200 transition">4. Globales y Locales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <!-- ===================================================================== -->
+        <!-- TEMA 1: FUNCIONES PREDEFINIDAS DE JAVASCRIPT                          -->
+        <!-- ===================================================================== -->
+        <section id="sec-predefinidas" class="space-y-16">
+            <div class="border-l-4 border-yellow-400 pl-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Módulo 01</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">1. Funciones predefinidas de JavaScript</h2>
+                <p class="text-slate-400 mt-2 max-w-3xl">JavaScript incluye funciones y métodos integrados en el lenguaje listos para usarse sin necesidad de programarlos desde cero.</p>
+            </div>
+
+            <!-- 1.1 FUNCIONES DE CONVERSIÓN DE TIPOS DE DATOS -->
+            <div id="sec-conversion" class="scroll-mt-24 space-y-8">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="px-2.5 py-1 rounded-md bg-yellow-400/15 text-yellow-400 font-mono text-sm font-bold">1.1</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Funciones de conversión de tipos de datos</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- parseFloat() -->
+                    <article id="fn-parsefloat" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">parseFloat()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Global</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Analiza una cadena de texto y devuelve un número de punto flotante (con decimales). Extrae el número inicial hasta encontrar un carácter no numérico.
+                            </p>
+                            <!-- Bloque de código -->
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> texto = <span class="text-emerald-400">"19.95 USD"</span>;
+<span class="text-purple-400">let</span> num = <span class="text-yellow-300">parseFloat</span>(texto);
+<span class="text-slate-500">// Resultado: 19.95 (number)</span></code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Pruébalo en vivo -->
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Cadena de entrada:</label>
+                                <input id="in-parsefloat" type="text" value="45.78 metros" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <button onclick="runParseFloat()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar parseFloat()
+                            </button>
+                            <div id="out-parsefloat" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Valor: <span class="text-emerald-400 font-bold">45.78</span> | typeof: <span class="text-sky-400">"number"</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Number() -->
+                    <article id="fn-number" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">Number()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Constructor</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Convierte estrictamente todo el valor recibido a un número (entero o decimal). Si contiene letras o texto adicional, devuelve <code class="text-rose-400">NaN</code> (Not a Number).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-yellow-300">Number</span>(<span class="text-emerald-400">"123.4"</span>); <span class="text-slate-500">// 123.4</span>
+<span class="text-yellow-300">Number</span>(<span class="text-sky-400">true</span>);    <span class="text-slate-500">// 1</span>
+<span class="text-yellow-300">Number</span>(<span class="text-emerald-400">"12px"</span>);  <span class="text-slate-500">// NaN</span></code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Pruébalo en vivo -->
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Valor a convertir (ej. "100.5", "20px", "true"):</label>
+                                <input id="in-number" type="text" value="100.5" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <button onclick="runNumber()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar Number()
+                            </button>
+                            <div id="out-number" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Valor: <span class="text-emerald-400 font-bold">100.5</span> | typeof: <span class="text-sky-400">"number"</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- parseInt() -->
+                    <article id="fn-parseint" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">parseInt()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Global</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Analiza una cadena y devuelve un número <strong>entero</strong> (descarta decimales sin redondear). Opcionalmente acepta una base numérica (radix, ej. 10 o 2).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-yellow-300">parseInt</span>(<span class="text-emerald-400">"99.99"</span>, <span class="text-amber-400">10</span>); <span class="text-slate-500">// 99</span>
+<span class="text-yellow-300">parseInt</span>(<span class="text-emerald-400">"1010"</span>, <span class="text-amber-400">2</span>);   <span class="text-slate-500">// 10 (binario)</span></code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Pruébalo en vivo -->
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
+                                    <label class="block text-xs text-slate-400 mb-1">Cadena:</label>
+                                    <input id="in-parseint-str" type="text" value="89.95px" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Base:</label>
+                                    <input id="in-parseint-base" type="number" value="10" min="2" max="36" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                            </div>
+                            <button onclick="runParseInt()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar parseInt()
+                            </button>
+                            <div id="out-parseint" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Valor: <span class="text-emerald-400 font-bold">89</span> | typeof: <span class="text-sky-400">"number"</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- 1.2 FUNCIONES DE MANIPULACIÓN DE CADENAS -->
+            <div id="sec-cadenas" class="scroll-mt-24 space-y-8">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="px-2.5 py-1 rounded-md bg-yellow-400/15 text-yellow-400 font-mono text-sm font-bold">1.2</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Funciones de manipulación de cadenas (String)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- concat() -->
+                    <article id="fn-concat" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">concat()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">String.prototype</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Une dos o más cadenas de texto y devuelve una nueva cadena combinada sin modificar las originales.
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> saludo = <span class="text-emerald-400">"Hola"</span>;
+<span class="text-purple-400">let</span> full = saludo.<span class="text-yellow-300">concat</span>(<span class="text-emerald-400">" "</span>, <span class="text-emerald-400">"Mundo"</span>);
+<span class="text-slate-500">// "Hola Mundo"</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Cadena 1:</label>
+                                    <input id="in-concat-1" type="text" value="JavaScript" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Cadena 2:</label>
+                                    <input id="in-concat-2" type="text" value=" es genial!" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                            </div>
+                            <button onclick="runConcat()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar concat()
+                            </button>
+                            <div id="out-concat" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800 break-words">
+                                "JavaScript es genial!"
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- substring() -->
+                    <article id="fn-substring" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">substring()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">String.prototype</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Extrae caracteres de una cadena entre dos índices: <code class="text-yellow-300">inicio</code> (incluido) y <code class="text-yellow-300">fin</code> (excluido).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> txt = <span class="text-emerald-400">"Programación"</span>;
+txt.<span class="text-yellow-300">substring</span>(<span class="text-amber-400">0</span>, <span class="text-amber-400">8</span>);
+<span class="text-slate-500">// "Programa"</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Texto base:</label>
+                                <input id="in-sub-str" type="text" value="Desarrollo Web" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Inicio (index):</label>
+                                    <input id="in-sub-start" type="number" value="0" min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Fin (index):</label>
+                                    <input id="in-sub-end" type="number" value="10" min="0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                            </div>
+                            <button onclick="runSubstring()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar substring()
+                            </button>
+                            <div id="out-substring" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800">
+                                "Desarrollo"
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- split() -->
+                    <article id="fn-split" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">split()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">String → Array</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Divide una cadena de texto en un arreglo (Array) de subcadenas utilizando un separador especificado (como coma, espacio o guion).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> lista = <span class="text-emerald-400">"HTML,CSS,JS"</span>;
+lista.<span class="text-yellow-300">split</span>(<span class="text-emerald-400">","</span>);
+<span class="text-slate-500">// ["HTML", "CSS", "JS"]</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
+                                    <label class="block text-xs text-slate-400 mb-1">Texto a dividir:</label>
+                                    <input id="in-split-str" type="text" value="rojo,verde,azul" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Separador:</label>
+                                    <input id="in-split-sep" type="text" value="," class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                            </div>
+                            <button onclick="runSplit()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar split()
+                            </button>
+                            <div id="out-split" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800 break-words">
+                                ["rojo", "verde", "azul"] (length: 3)
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- 1.3 FUNCIONES DE MANIPULACIÓN DE ARRAYS -->
+            <div id="sec-arrays" class="scroll-mt-24 space-y-8">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="px-2.5 py-1 rounded-md bg-yellow-400/15 text-yellow-400 font-mono text-sm font-bold">1.3</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Funciones de manipulación de arrays</h3>
+                </div>
+
+                <!-- Estado Compartido Visual del Array para demostrar mutación en vivo -->
+                <div class="bg-slate-900/90 border border-yellow-400/30 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-yellow-400">Estado en memoria del Array activo:</span>
+                        <div id="live-array-display" class="font-mono text-base sm:text-lg text-white mt-1">
+                            let frutas = <span class="text-emerald-400">["Manzana", "Banana", "Naranja"]</span>;
+                        </div>
+                    </div>
+                    <button onclick="resetDemoArray()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition shrink-0 cursor-pointer">
+                        ↺ Reiniciar Array
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- push() -->
+                    <article id="fn-push" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">push()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Muta el Array</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Agrega uno o más elementos al <strong>final</strong> del array y devuelve la nueva longitud (<code class="text-yellow-300">length</code>) del arreglo.
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> len = frutas.<span class="text-yellow-300">push</span>(<span class="text-emerald-400">"Uva"</span>);
+<span class="text-slate-500">// len = 4</span>
+<span class="text-slate-500">// frutas = [..., "Uva"]</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Elemento a agregar al final:</label>
+                                <input id="in-push" type="text" value="Mango" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <button onclick="runPush()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar frutas.push()
+                            </button>
+                            <div id="out-push" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Pulsa ejecutar para agregar al array superior.
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- pop() -->
+                    <article id="fn-pop" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">pop()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Muta el Array</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Elimina el <strong>último</strong> elemento de un array y devuelve ese elemento eliminado. Si el array está vacío, devuelve <code class="text-slate-400">undefined</code>.
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> ultimo = frutas.<span class="text-yellow-300">pop</span>();
+<span class="text-slate-500">// ultimo = "Naranja"</span>
+<span class="text-slate-500">// frutas = ["Manzana", "Banana"]</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <p class="text-xs text-slate-400">Extrae el último elemento del array <code class="text-white">frutas</code> activo:</p>
+                            <button onclick="runPop()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar frutas.pop()
+                            </button>
+                            <div id="out-pop" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Pulsa ejecutar para extraer el último elemento.
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- join() -->
+                    <article id="fn-join" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">join()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Array → String</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Une todos los elementos de un array en una sola cadena de texto, separados por el delimitador que indiques (por defecto es una coma).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> texto = frutas.<span class="text-yellow-300">join</span>(<span class="text-emerald-400">" - "</span>);
+<span class="text-slate-500">// "Manzana - Banana - Naranja"</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Separador personalizado:</label>
+                                <input id="in-join" type="text" value=" | " class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <button onclick="runJoin()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                Ejecutar frutas.join()
+                            </button>
+                            <div id="out-join" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800 break-words">
+                                "Manzana | Banana | Naranja"
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+            <!-- 1.4 FUNCIONES DE MATEMÁTICAS -->
+            <div id="sec-math" class="scroll-mt-24 space-y-8">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="px-2.5 py-1 rounded-md bg-yellow-400/15 text-yellow-400 font-mono text-sm font-bold">1.4</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Funciones de matemáticas (Objeto Math)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Math.abs() -->
+                    <article id="fn-abs" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">Math.abs()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Valor Absoluto</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Devuelve el valor absoluto de un número (convierte cualquier número negativo en positivo; los positivos y el cero permanecen igual).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-sky-400">Math</span>.<span class="text-yellow-300">abs</span>(<span class="text-amber-400">-42.5</span>); <span class="text-slate-500">// 42.5</span>
+<span class="text-sky-400">Math</span>.<span class="text-yellow-300">abs</span>(<span class="text-amber-400">15</span>);    <span class="text-slate-500">// 15</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="flex gap-2">
+                                <input id="in-abs" type="number" step="any" value="-27.8" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                <button onclick="runAbs()" class="px-5 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition shrink-0 cursor-pointer">
+                                    Ejecutar
+                                </button>
+                            </div>
+                            <div id="out-abs" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800">
+                                Math.abs(-27.8) = 27.8
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Math.max() -->
+                    <article id="fn-max" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">Math.max()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Valor Máximo</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Devuelve el número más grande de entre cero o más números proporcionados como argumentos.
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-sky-400">Math</span>.<span class="text-yellow-300">max</span>(<span class="text-amber-400">12</span>, <span class="text-amber-400">85</span>, <span class="text-amber-400">34</span>, <span class="text-amber-400">9</span>); <span class="text-slate-500">// 85</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="flex gap-2">
+                                <input id="in-max" type="text" value="14, 92, 5, 67, 31" placeholder="Números separados por coma" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                <button onclick="runMax()" class="px-5 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition shrink-0 cursor-pointer">
+                                    Ejecutar
+                                </button>
+                            </div>
+                            <div id="out-max" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800">
+                                Math.max(14, 92, 5, 67, 31) = 92
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Math.random() * rango -->
+                    <article id="fn-random" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">Math.random() * rango</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Aleatoriedad</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                <code class="text-yellow-300">Math.random()</code> genera un decimal pseudoaleatorio entre <code class="text-amber-400">0</code> (incluido) y <code class="text-amber-400">1</code> (excluido). Al multiplicarlo por un <code class="text-yellow-300">rango</code>, escalamos el resultado entre 0 y ese rango.
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-purple-400">let</span> rango = <span class="text-amber-400">100</span>;
+<span class="text-purple-400">let</span> aleatorio = <span class="text-sky-400">Math</span>.<span class="text-yellow-300">random</span>() * rango;
+<span class="text-slate-500">// Ej: 73.418291042...</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="flex items-center gap-2">
+                                <label class="text-xs text-slate-400 shrink-0">Rango máximo:</label>
+                                <input id="in-random" type="number" value="100" min="1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                <button onclick="runRandom()" class="px-5 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition shrink-0 cursor-pointer">
+                                    Generar
+                                </button>
+                            </div>
+                            <div id="out-random" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-slate-300 border border-slate-800">
+                                Decimal: <span class="text-emerald-400 font-bold">48.2914</span> | Entero (Math.floor): <span class="text-sky-400 font-bold">48</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Math.pow() -->
+                    <article id="fn-pow" class="scroll-mt-24 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-mono text-lg font-bold text-yellow-400">Math.pow()</h4>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300">Potencia</span>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed mb-4">
+                                Devuelve la <code class="text-yellow-300">base</code> elevada a la potencia del <code class="text-yellow-300">exponente</code> (equivalente a <code class="text-slate-400">base ** exponente</code>).
+                            </p>
+                            <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs overflow-x-auto mb-5">
+                                <pre><code><span class="text-sky-400">Math</span>.<span class="text-yellow-300">pow</span>(<span class="text-amber-400">2</span>, <span class="text-amber-400">8</span>); <span class="text-slate-500">// 2^8 = 256</span>
+<span class="text-sky-400">Math</span>.<span class="text-yellow-300">pow</span>(<span class="text-amber-400">5</span>, <span class="text-amber-400">3</span>); <span class="text-slate-500">// 5^3 = 125</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950/70 border border-slate-800/90 rounded-xl p-4 space-y-3">
+                            <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo</span>
+                            <div class="grid grid-cols-3 gap-2 items-end">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Base:</label>
+                                    <input id="in-pow-base" type="number" value="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-1">Exponente:</label>
+                                    <input id="in-pow-exp" type="number" value="10" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <button onclick="runPow()" class="w-full py-2 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-semibold text-sm transition cursor-pointer">
+                                    Calcular
+                                </button>
+                            </div>
+                            <div id="out-pow" class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-400 border border-slate-800">
+                                Math.pow(2, 10) = 1024
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TEMA 2: FUNCIONES DEFINIDAS POR EL PROGRAMADOR                        -->
+        <!-- ===================================================================== -->
+        <section id="sec-programador" class="scroll-mt-24 space-y-8">
+            <div class="border-l-4 border-yellow-400 pl-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Módulo 02</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">2. Funciones definidas por el programador</h2>
+                <p class="text-slate-400 mt-2 max-w-3xl">Son bloques de código reutilizables creados por nosotros para realizar tareas específicas mediante la palabra clave <code class="text-yellow-400 font-mono">function</code>.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Explicación y Código -->
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-yellow-400/10 text-yellow-400 font-mono text-xs font-bold">
+                            2.1 Invocación de una función
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Declaración vs. Invocación</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Definir una función solo guarda las instrucciones en memoria; <strong>no las ejecuta</strong>. Para ejecutar el código interno, debemos <strong>invocarla (llamarla)</strong> escribiendo su nombre seguido de paréntesis <code class="text-yellow-300 font-mono">()</code> y enviando sus argumentos.
+                        </p>
+
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed">
+                            <pre><code><span class="text-slate-500">// 1. Declaración de la función</span>
+<span class="text-purple-400">function</span> <span class="text-sky-400">saludarUsuario</span>(nombre, rol) {
+    <span class="text-purple-400">let</span> mensaje = <span class="text-emerald-400">`Hola ${nombre}, tu rol es ${rol}.`</span>;
+    <span class="text-purple-400">return</span> mensaje;
+}
+
+<span class="text-slate-500">// 2. Invocación de la función con argumentos</span>
+<span class="text-sky-400">saludarUsuario</span>(<span class="text-emerald-400">"Sofía"</span>, <span class="text-emerald-400">"Desarrolladora"</span>);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Laboratorio Interactivo de Invocación -->
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Simulador de Invocación</span>
+                            <span id="call-counter" class="text-xs font-mono px-2.5 py-1 rounded-md bg-slate-800 text-slate-300">Invocaciones: 0</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Argumento 1 (nombre):</label>
+                                <input id="in-fn-nombre" type="text" value="Carlos" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Argumento 2 (rol):</label>
+                                <input id="in-fn-rol" type="text" value="Arquitecto JS" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                        </div>
+                        <button onclick="runCustomFunction()" class="w-full py-2.5 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-bold text-sm transition cursor-pointer shadow-lg shadow-yellow-400/10">
+                            ▶ Invocar saludarUsuario()
+                        </button>
+                        <div>
+                            <span class="block text-xs text-slate-500 mb-1 font-mono">Consola de salida:</span>
+                            <div id="out-custom-fn" class="bg-slate-900 border border-slate-800 rounded-lg p-3.5 font-mono text-xs text-emerald-400 min-h-[64px] space-y-1">
+                                <span class="text-slate-500">// Esperando invocación...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TEMA 3: FUNCIONES QUE DEVUELVEN UN RESULTADO: RETURN                  -->
+        <!-- ===================================================================== -->
+        <section id="sec-return" class="scroll-mt-24 space-y-8">
+            <div class="border-l-4 border-yellow-400 pl-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Módulo 03</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">3. Funciones que devuelven un resultado: RETURN</h2>
+                <p class="text-slate-400 mt-2 max-w-3xl">La sentencia <code class="text-yellow-400 font-mono">return</code> finaliza inmediatamente la ejecución de la función y entrega un valor de salida hacia el punto donde fue llamada.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Código y flujo -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Captura y reutilización de resultados</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Gracias a <code class="text-yellow-300 font-mono">return</code>, podemos almacenar el resultado de una función dentro de una variable y utilizarlo en otras operaciones matemáticas o lógicas. Además, cualquier código escrito <em>después</em> de un <code class="text-yellow-300 font-mono">return</code> ejecutado nunca se alcanzará.
+                        </p>
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed">
+                            <pre><code><span class="text-purple-400">function</span> <span class="text-sky-400">calcularTotalConIVA</span>(precio, porcentajeIVA) {
+    <span class="text-purple-400">let</span> impuesto = precio * (porcentajeIVA / <span class="text-amber-400">100</span>);
+    <span class="text-purple-400">let</span> total = precio + impuesto;
+    <span class="text-yellow-400 font-bold">return</span> total; <span class="text-slate-500">// Devuelve el valor y termina</span>
+    <span class="text-slate-600">// console.log("Esto nunca se ejecuta");</span>
+}
+
+<span class="text-purple-400">let</span> factura = <span class="text-sky-400">calcularTotalConIVA</span>(<span class="text-amber-400">500</span>, <span class="text-amber-400">16</span>);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Laboratorio Return -->
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <span class="block text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Pruébalo en vivo: Flujo con RETURN</span>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Precio base ($):</label>
+                                <input id="in-ret-precio" type="number" value="500" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">IVA (%):</label>
+                                <input id="in-ret-iva" type="number" value="16" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-yellow-400">
+                            </div>
+                        </div>
+                        <button onclick="runReturnDemo()" class="w-full py-2.5 px-4 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-bold text-sm transition cursor-pointer">
+                            Calcular y Retornar Resultado
+                        </button>
+                        <div id="out-return" class="bg-slate-900 border border-slate-800 rounded-lg p-4 font-mono text-xs space-y-2">
+                            <div class="text-slate-400">1. Entrada: <span class="text-white">calcularTotalConIVA(500, 16)</span></div>
+                            <div class="text-yellow-400">2. Sentencia return entrega: <span class="text-emerald-400 font-bold text-sm">580</span></div>
+                            <div class="text-sky-400">3. Variable almacenada: let factura = 580 (typeof: "number")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- TEMA 4: VARIABLES EN UNA FUNCIÓN: GLOBALES Y LOCALES                  -->
+        <!-- ===================================================================== -->
+        <section id="sec-variables" class="scroll-mt-24 space-y-8">
+            <div class="border-l-4 border-yellow-400 pl-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-yellow-400">Módulo 04</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">4. Variables en una función: GLOBALES Y LOCALES</h2>
+                <p class="text-slate-400 mt-2 max-w-3xl">El alcance (<em class="text-slate-200">scope</em>) determina desde qué partes del programa se puede leer o modificar una variable.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Tarjeta Global -->
+                    <div class="bg-slate-950 border border-sky-500/30 rounded-xl p-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-3 h-3 rounded-full bg-sky-400"></span>
+                            <h3 class="font-bold text-white text-lg">Variables Globales</h3>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                            Se declaran <strong>fuera</strong> de cualquier función. Son accesibles y modificables tanto desde el código principal como desde el interior de cualquier función.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-sky-300">
+                            let contadorGlobal = 10; // Visible en todo el archivo
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta Local -->
+                    <div class="bg-slate-950 border border-emerald-500/30 rounded-xl p-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                            <h3 class="font-bold text-white text-lg">Variables Locales</h3>
+                        </div>
+                        <p class="text-sm text-slate-300 leading-relaxed mb-3">
+                            Se declaran <strong>dentro</strong> de una función (con <code class="text-yellow-300">let</code>, <code class="text-yellow-300">const</code> o <code class="text-yellow-300">var</code>). Solo existen mientras la función se ejecuta; intentar leerlas desde fuera genera un <code class="text-rose-400">ReferenceError</code>.
+                        </p>
+                        <div class="bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-300">
+                            function test() { let secreta = "ABC"; } // Solo vive aquí
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Laboratorio Visual de Alcance Global vs Local -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-yellow-400">⚡ Laboratorio Visual de Alcance (Scope)</span>
+                            <h4 class="text-base font-bold text-white mt-0.5">Observa cómo interactúan la memoria Global y el bloque Local</h4>
+                        </div>
+                        <button onclick="resetScopeDemo()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-semibold border border-slate-700 cursor-pointer self-start sm:self-auto">
+                            ↺ Reiniciar Memoria
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                        <!-- Código fuente visual -->
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">
+                            <pre><code><span class="text-sky-400">// ÁMBITO GLOBAL</span>
+<span class="text-purple-400">let</span> puntajeGlobal = <span id="code-global-val" class="text-amber-400 font-bold">100</span>;
+
+<span class="text-purple-400">function</span> <span class="text-yellow-300">jugarNivel</span>() {
+    <span class="text-emerald-400">// ÁMBITO LOCAL (exclusivo de jugarNivel)</span>
+    <span class="text-purple-400">let</span> bonoLocal = <span class="text-amber-400">50</span>;
+    puntajeGlobal += bonoLocal; <span class="text-slate-500">// Modifica la global</span>
+    <span class="text-purple-400">return</span> { puntajeGlobal, bonoLocal };
+}</code></pre>
+                        </div>
+
+                        <!-- Controles y Diagrama de Cajas de Memoria -->
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button onclick="runScopeInside()" class="py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition cursor-pointer">
+                                    1. Ejecutar jugarNivel() (Dentro)
+                                </button>
+                                <button onclick="runScopeOutside()" class="py-2.5 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 font-bold text-xs sm:text-sm transition cursor-pointer">
+                                    2. Leer bonoLocal desde Fuera
+                                </button>
+                            </div>
+
+                            <!-- Visualización de Cajas de Ámbito -->
+                            <div class="border-2 border-dashed border-sky-500/40 rounded-xl p-4 bg-sky-950/10 space-y-3">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-bold text-sky-400">🌍 ÁMBITO GLOBAL (Siempre activo)</span>
+                                    <span class="font-mono bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded">puntajeGlobal = <strong id="vis-global-val">100</strong></span>
+                                </div>
+
+                                <div id="vis-local-box" class="border border-emerald-500/40 rounded-lg p-3 bg-emerald-950/20 transition-all">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="font-bold text-emerald-400">📦 ÁMBITO LOCAL: jugarNivel()</span>
+                                        <span id="vis-local-status" class="font-mono text-slate-400">Inactivo (en espera)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="out-scope-log" class="bg-slate-900 border border-slate-800 rounded-lg p-3 font-mono text-xs text-slate-300">
+                                Estado inicial: <span class="text-sky-400">puntajeGlobal</span> vale 100. <span class="text-emerald-400">bonoLocal</span> aún no existe en memoria.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/60 py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-yellow-400 text-slate-950 font-bold">JS</span>
+                <span>Guía Interactiva de Funciones en JavaScript</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <p>Todos los ejemplos ejecutan código JavaScript nativo en tiempo real.</p>
+                <a href="https://github.com/ChrisHS176/Etapa4" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-yellow-400 border border-slate-700 font-semibold transition">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica JavaScript Interactiva -->
+    <script>
+        // ==========================================
+        // NAVEGACIÓN MÓVIL
+        // ==========================================
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Utilidad para escapar HTML y prevenir inyección al mostrar salidas
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // ==========================================
+        // 1.1 FUNCIONES DE CONVERSIÓN DE TIPOS
+        // ==========================================
+        function runParseFloat() {
+            const input = document.getElementById('in-parsefloat').value;
+            const result = parseFloat(input);
+            const colorClass = Number.isNaN(result) ? 'text-rose-400' : 'text-emerald-400';
+            document.getElementById('out-parsefloat').innerHTML = 
+                `Valor: <span class="${colorClass} font-bold">${result}</span> | typeof: <span class="text-sky-400">"${typeof result}"</span>`;
+        }
+
+        function runNumber() {
+            let raw = document.getElementById('in-number').value;
+            // Permitir probar booleanos reales si escriben "true" o "false"
+            let valToConvert = raw;
+            if (raw.trim() === 'true') valToConvert = true;
+            if (raw.trim() === 'false') valToConvert = false;
+
+            const result = Number(valToConvert);
+            const colorClass = Number.isNaN(result) ? 'text-rose-400' : 'text-emerald-400';
+            document.getElementById('out-number').innerHTML = 
+                `Valor: <span class="${colorClass} font-bold">${result}</span> | typeof: <span class="text-sky-400">"${typeof result}"</span>`;
+        }
+
+        function runParseInt() {
+            const str = document.getElementById('in-parseint-str').value;
+            const base = parseInt(document.getElementById('in-parseint-base').value, 10) || 10;
+            const result = parseInt(str, base);
+            const colorClass = Number.isNaN(result) ? 'text-rose-400' : 'text-emerald-400';
+            document.getElementById('out-parseint').innerHTML = 
+                `Valor (base ${base}): <span class="${colorClass} font-bold">${result}</span> | typeof: <span class="text-sky-400">"${typeof result}"</span>`;
+        }
+
+        // ==========================================
+        // 1.2 FUNCIONES DE MANIPULACIÓN DE CADENAS
+        // ==========================================
+        function runConcat() {
+            const s1 = document.getElementById('in-concat-1').value;
+            const s2 = document.getElementById('in-concat-2').value;
+            const result = s1.concat(s2);
+            document.getElementById('out-concat').textContent = `"${result}" (length: ${result.length})`;
+        }
+
+        function runSubstring() {
+            const str = document.getElementById('in-sub-str').value;
+            const start = parseInt(document.getElementById('in-sub-start').value, 10) || 0;
+            const end = parseInt(document.getElementById('in-sub-end').value, 10) || 0;
+            const result = str.substring(start, end);
+            document.getElementById('out-substring').textContent = `"${result}"`;
+        }
+
+        function runSplit() {
+            const str = document.getElementById('in-split-str').value;
+            const sep = document.getElementById('in-split-sep').value;
+            const arr = str.split(sep);
+            document.getElementById('out-split').textContent = `${JSON.stringify(arr)} (length: ${arr.length})`;
+        }
+
+        // ==========================================
+        // 1.3 FUNCIONES DE MANIPULACIÓN DE ARRAYS
+        // ==========================================
+        let demoFrutas = ["Manzana", "Banana", "Naranja"];
+
+        function updateArrayDisplay() {
+            const formatted = JSON.stringify(demoFrutas);
+            document.getElementById('live-array-display').innerHTML = 
+                `let frutas = <span class="text-emerald-400">${escapeHTML(formatted)}</span>; <span class="text-xs text-slate-400">(length: ${demoFrutas.length})</span>`;
+        }
+
+        function resetDemoArray() {
+            demoFrutas = ["Manzana", "Banana", "Naranja"];
+            updateArrayDisplay();
+            document.getElementById('out-push').textContent = 'Array reiniciado.';
+            document.getElementById('out-pop').textContent = 'Array reiniciado.';
+            runJoin();
+        }
+
+        function runPush() {
+            const val = document.getElementById('in-push').value.trim();
+            if (!val) return;
+            const newLength = demoFrutas.push(val);
+            updateArrayDisplay();
+            document.getElementById('out-push').innerHTML = 
+                `Retornó nueva longitud: <span class="text-yellow-400 font-bold">${newLength}</span> | Agregado: <span class="text-emerald-400">"${escapeHTML(val)}"</span>`;
+        }
+
+        function runPop() {
+            const removed = demoFrutas.pop();
+            updateArrayDisplay();
+            if (removed === undefined) {
+                document.getElementById('out-pop').innerHTML = 
+                    `Retornó: <span class="text-rose-400 font-bold">undefined</span> (el array está vacío)`;
+            } else {
+                document.getElementById('out-pop').innerHTML = 
+                    `Elemento extraído: <span class="text-amber-400 font-bold">"${escapeHTML(removed)}"</span>`;
+            }
+        }
+
+        function runJoin() {
+            const sep = document.getElementById('in-join').value;
+            const joined = demoFrutas.join(sep);
+            document.getElementById('out-join').textContent = `"${joined}"`;
+        }
+
+        // ==========================================
+        // 1.4 FUNCIONES DE MATEMÁTICAS (MATH)
+        // ==========================================
+        function runAbs() {
+            const num = parseFloat(document.getElementById('in-abs').value) || 0;
+            const res = Math.abs(num);
+            document.getElementById('out-abs').textContent = `Math.abs(${num}) = ${res}`;
+        }
+
+        function runMax() {
+            const raw = document.getElementById('in-max').value;
+            const nums = raw.split(',')
+                .map(n => parseFloat(n.trim()))
+                .filter(n => !Number.isNaN(n));
+            
+            if (nums.length === 0) {
+                document.getElementById('out-max').innerHTML = `<span class="text-rose-400">Ingresa números válidos separados por coma.</span>`;
+                return;
+            }
+            const res = Math.max(...nums);
+            document.getElementById('out-max').textContent = `Math.max(${nums.join(', ')}) = ${res}`;
+        }
+
+        function runRandom() {
+            const rango = parseFloat(document.getElementById('in-random').value) || 100;
+            const rawRandom = Math.random() * rango;
+            const entero = Math.floor(rawRandom);
+            document.getElementById('out-random').innerHTML = 
+                `Decimal: <span class="text-emerald-400 font-bold">${rawRandom.toFixed(4)}</span> | Entero (Math.floor): <span class="text-sky-400 font-bold">${entero}</span>`;
+        }
+
+        function runPow() {
+            const base = parseFloat(document.getElementById('in-pow-base').value) || 0;
+            const exp = parseFloat(document.getElementById('in-pow-exp').value) || 0;
+            const res = Math.pow(base, exp);
+            document.getElementById('out-pow').textContent = `Math.pow(${base}, ${exp}) = ${res}`;
+        }
+
+        // ==========================================
+        // 2. FUNCIONES DEFINIDAS POR EL PROGRAMADOR
+        // ==========================================
+        let invocaciones = 0;
+
+        function saludarUsuario(nombre, rol) {
+            return `Hola ${nombre}, tu rol es ${rol}.`;
+        }
+
+        function runCustomFunction() {
+            const nombre = document.getElementById('in-fn-nombre').value || 'Invitado';
+            const rol = document.getElementById('in-fn-rol').value || 'Usuario';
+            invocaciones++;
+            
+            document.getElementById('call-counter').textContent = `Invocaciones: ${invocaciones}`;
+            const resultado = saludarUsuario(nombre, rol);
+            
+            const outBox = document.getElementById('out-custom-fn');
+            if (invocaciones === 1) outBox.innerHTML = '';
+            
+            const line = document.createElement('div');
+            line.innerHTML = `<span class="text-slate-500">[#${invocaciones}]</span> <span class="text-sky-400">saludarUsuario("${escapeHTML(nombre)}", "${escapeHTML(rol)}")</span> → <span class="text-emerald-400">"${escapeHTML(resultado)}"</span>`;
+            outBox.prepend(line);
+        }
+
+        // ==========================================
+        // 3. RETURN
+        // ==========================================
+        function calcularTotalConIVA(precio, porcentajeIVA) {
+            let impuesto = precio * (porcentajeIVA / 100);
+            let total = precio + impuesto;
+            return total;
+        }
+
+        function runReturnDemo() {
+            const precio = parseFloat(document.getElementById('in-ret-precio').value) || 0;
+            const iva = parseFloat(document.getElementById('in-ret-iva').value) || 0;
+            
+            const factura = calcularTotalConIVA(precio, iva);
+            
+            document.getElementById('out-return').innerHTML = `
+                <div class="text-slate-400">1. Llamada: <span class="text-white">calcularTotalConIVA(${precio}, ${iva})</span></div>
+                <div class="text-yellow-400">2. Sentencia <code class="bg-slate-800 px-1 rounded">return</code> entrega: <span class="text-emerald-400 font-bold text-sm">${factura.toFixed(2)}</span></div>
+                <div class="text-sky-400">3. Variable capturada: let factura = ${factura.toFixed(2)} (typeof: "${typeof factura}")</div>
+            `;
+        }
+
+        // ==========================================
+        // 4. VARIABLES GLOBALES Y LOCALES
+        // ==========================================
+        let puntajeGlobal = 100;
+
+        function runScopeInside() {
+            // Variable local dentro de la función
+            let bonoLocal = 50;
+            puntajeGlobal += bonoLocal;
+
+            document.getElementById('code-global-val').textContent = puntajeGlobal;
+            document.getElementById('vis-global-val').textContent = puntajeGlobal;
+            
+            const localStatus = document.getElementById('vis-local-status');
+            localStatus.innerHTML = `<span class="text-emerald-300">bonoLocal = 50 (Creada y destruida al terminar)</span>`;
+            
+            document.getElementById('out-scope-log').innerHTML = 
+                `<span class="text-emerald-400">✔ Éxito dentro de jugarNivel():</span> Se creó la variable local <code class="text-white">bonoLocal = 50</code> y se sumó a <code class="text-sky-400">puntajeGlobal</code> (ahora vale <strong>${puntajeGlobal}</strong>). Al terminar la función, <code class="text-white">bonoLocal</code> desaparece de la memoria.`;
+        }
+
+        function runScopeOutside() {
+            document.getElementById('out-scope-log').innerHTML = 
+                `<span class="text-rose-400">✖ Uncaught ReferenceError: bonoLocal is not defined.</span> No puedes leer una variable <strong>local</strong> desde el ámbito global; solo <code class="text-sky-400">puntajeGlobal (${puntajeGlobal})</code> es visible aquí.`;
+        }
+
+        function resetScopeDemo() {
+            puntajeGlobal = 100;
+            document.getElementById('code-global-val').textContent = 100;
+            document.getElementById('vis-global-val').textContent = 100;
+            document.getElementById('vis-local-status').innerHTML = `Inactivo (en espera)`;
+            document.getElementById('out-scope-log').innerHTML = 
+                `Memoria reiniciada: <span class="text-sky-400">puntajeGlobal</span> vale 100.`;
+        }
+    </script>
+</body>
+</html>
